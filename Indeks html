@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Redirecting...</title>
+    <meta http-equiv="Refresh" content="0; url=index.xhtml"/>
+  </head>
+  <body>
+    Redirecting...
+    <!-- TODO: make a nicer comment, even if noone sees it -->
+  </body>
+</html>package com.example.crasher;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button crashButton = findViewById(R.id.crashButton);
+        crashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Crash via null pointer
+                    String[] arr = null;
+                    String crash = arr[0]; // NullPointerException
+
+                    // Crash via array out of bounds
+                    int[] numbers = {1};
+                    int value = numbers[1]; // ArrayIndexOutOfBoundsException
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Crash triggered: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+}
